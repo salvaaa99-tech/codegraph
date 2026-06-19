@@ -1,0 +1,42 @@
+name: Deploy Dueñas Propiedades site
+
+on:
+  push:
+    branches: [claude/duenas-propiedades-website-ebdw45]
+    paths:
+      - 'duenas-propiedades/**'
+      - '.github/workflows/deploy-duenas.yml'
+  workflow_dispatch:
+
+# Allow GITHUB_TOKEN to deploy to Pages and verify the deployment origin.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site (duenas-propiedades folder as root)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: duenas-propiedades
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
