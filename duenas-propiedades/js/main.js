@@ -26,6 +26,13 @@
   var emptyMsg = document.getElementById("gridEmpty");
   var props = window.PROPERTIES || [];
 
+  var STATUS = {
+    disponible: { label: "Disponible", cls: "is-disponible" },
+    vendido: { label: "Vendido", cls: "is-vendido" },
+    arrendado: { label: "Arrendado", cls: "is-arrendado" }
+  };
+  var OP_LABEL = { venta: "Venta", arriendo: "Arriendo" };
+
   function featureHtml(p) {
     var parts = [];
     if (p.beds > 0) parts.push('<span>🛏️ ' + p.beds + " dorm.</span>");
@@ -35,17 +42,21 @@
   }
 
   function cardHtml(p) {
-    var opLabel = p.op === "venta" ? "Venta" : "Arriendo";
+    var st = STATUS[p.status] || STATUS.disponible;
+    var sold = p.status === "vendido" || p.status === "arrendado";
     return (
-      '<article class="property" data-op="' + p.op + '" data-tipo="' + p.tipo + '">' +
+      '<article class="property' + (sold ? " is-sold" : "") + '" data-op="' + p.op +
+        '" data-tipo="' + p.tipo + '" data-status="' + p.status + '">' +
         '<div class="property-media">' +
-          '<span class="property-tag">' + opLabel + "</span>" +
+          '<span class="property-tag">' + (OP_LABEL[p.op] || "") + "</span>" +
+          '<span class="property-status ' + st.cls + '">' + st.label + "</span>" +
           '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy" />' +
         "</div>" +
         '<div class="property-body">' +
           '<div class="property-price">' + p.price + "</div>" +
           '<h3 class="property-title">' + p.title + "</h3>" +
-          '<p class="property-loc">📍 ' + p.comuna + "</p>" +
+          '<p class="property-loc">📍 ' + p.sector + ", " + p.comuna + "</p>" +
+          (p.desc ? '<p class="property-desc">' + p.desc + "</p>" : "") +
           '<div class="property-features">' + featureHtml(p) + "</div>" +
         "</div>" +
       "</article>"
@@ -62,19 +73,21 @@
 
   /* ---- Filtros (chips) ---- */
   var filters = document.getElementById("filters");
+  function applyFilter(f) {
+    var filtered = props.filter(function (p) {
+      if (f === "all") return true;
+      if (f === "disponible") return p.status === "disponible";
+      return p.op === f || p.tipo === f || p.status === f;
+    });
+    render(filtered);
+  }
   if (filters) {
     filters.addEventListener("click", function (e) {
       var btn = e.target.closest(".chip");
       if (!btn) return;
       filters.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("is-active"); });
       btn.classList.add("is-active");
-
-      var f = btn.getAttribute("data-filter");
-      var filtered = props.filter(function (p) {
-        if (f === "all") return true;
-        return p.op === f || p.tipo === f;
-      });
-      render(filtered);
+      applyFilter(btn.getAttribute("data-filter"));
     });
   }
 
@@ -92,7 +105,6 @@
       });
       render(filtered);
 
-      // sincroniza chips a "Todas" y baja a resultados
       if (filters) {
         filters.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("is-active"); });
         var all = filters.querySelector('[data-filter="all"]');

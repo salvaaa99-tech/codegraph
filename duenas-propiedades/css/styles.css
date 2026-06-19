@@ -1,14 +1,16 @@
 /* ===== Design tokens ===== */
 :root {
-  --navy: #0f2c4c;
-  --navy-700: #143a63;
-  --gold: #c9a24b;
+  /* Marca Dueñas: verde del letrero + crema, con un dorado cálido de acento.
+     (Se conservan los nombres --navy/--navy-700 internamente.) */
+  --navy: #2f5749;        /* verde Dueñas */
+  --navy-700: #244437;    /* verde más oscuro */
+  --gold: #c39b52;
   --gold-soft: #e7d3a1;
-  --ink: #1c2530;
-  --muted: #5d6b7a;
-  --line: #e6e9ee;
+  --ink: #25302b;
+  --muted: #5f6d66;
+  --line: #e6e3d8;
   --bg: #ffffff;
-  --bg-alt: #f5f7fa;
+  --bg-alt: #f6f3ea;      /* crema */
   --white: #ffffff;
   --radius: 14px;
   --radius-sm: 9px;
@@ -93,7 +95,7 @@ p { margin: 0 0 1rem; }
 }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(120deg, rgba(15,44,76,.92) 0%, rgba(15,44,76,.66) 55%, rgba(15,44,76,.45) 100%);
+  background: linear-gradient(120deg, rgba(36,68,55,.93) 0%, rgba(47,87,73,.7) 55%, rgba(47,87,73,.45) 100%);
 }
 .hero-content { position: relative; max-width: 760px; }
 .hero h1 { color: var(--white); margin-bottom: 1rem; }
@@ -157,6 +159,16 @@ p { margin: 0 0 1rem; }
   font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
   padding: .3rem .7rem; border-radius: 999px;
 }
+.property-status {
+  position: absolute; top: 12px; right: 12px; color: #fff;
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  padding: .28rem .65rem; border-radius: 999px; backdrop-filter: blur(2px);
+}
+.property-status.is-disponible { background: rgba(47,87,73,.92); }
+.property-status.is-vendido { background: rgba(176,58,46,.92); }
+.property-status.is-arrendado { background: rgba(140,95,30,.92); }
+.property.is-sold .property-media img { filter: grayscale(.35) brightness(.96); }
+.property-desc { color: var(--muted); font-size: .9rem; margin: 0 0 .6rem; }
 .property-body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; flex: 1; }
 .property-price { font-family: var(--serif); font-size: 1.5rem; color: var(--navy); font-weight: 700; }
 .property-title { font-weight: 600; margin: .15rem 0 .25rem; }
@@ -205,6 +217,9 @@ p { margin: 0 0 1rem; }
 .contact-list a { color: var(--navy); font-weight: 600; }
 .contact-list a:hover { color: var(--gold); }
 .note { font-size: .82rem; color: var(--muted); font-style: italic; }
+.note code { font-style: normal; background: var(--bg-alt); padding: .1rem .35rem; border-radius: 5px; font-size: .85em; }
+.contact-map { margin: 1.4rem 0 .4rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+.contact-map iframe { width: 100%; height: 240px; border: 0; display: block; }
 
 .contact-form {
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);

@@ -31,15 +31,17 @@ O simplemente abre `index.html` con doble clic.
 
 ## Qué personalizar antes de publicar
 
-Los datos son de ejemplo. Reemplaza:
+El contenido (marca, dirección 3 Norte 144, web, propiedades, zonas) ya es real,
+tomado del Facebook/Instagram de Dueñas Propiedades. Falta solo:
 
-1. **Propiedades** → edita `js/properties.js` (título, operación, tipo, comuna,
-   precio, dormitorios, baños, m², imagen). Las imágenes son de Unsplash; súbelas
-   a `img/` y apunta `img:` a tu archivo local.
-2. **Contacto** → en `index.html` y `js/main.js` reemplaza el número de WhatsApp
-   `56900000000`, el email `contacto@duenaspropiedades.cl` y la dirección.
-3. **Estadísticas / textos del hero** y la sección *Nosotros* si quieres ajustar
-   el relato.
+1. **Número de WhatsApp** → reemplaza `56900000000` en `index.html` (botón
+   flotante, sección contacto) y en `js/main.js` (formulario). Opcional: agrega
+   un correo si quieres mostrarlo.
+2. **Fotos de las propiedades** → en `js/properties.js` las imágenes son de
+   referencia (Unsplash). Sube las fotos reales a `img/` y apunta cada `img:` a
+   tu archivo. También puedes editar precios, dormitorios, baños, m² y el campo
+   `status` (`disponible` / `vendido` / `arrendado`).
+3. **Textos** del hero y la sección *Nosotros* si quieres afinar el relato.
 
 ## Notas
 
